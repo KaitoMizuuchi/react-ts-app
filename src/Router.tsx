@@ -1,16 +1,28 @@
 import { useRoutes } from 'react-router-dom'
-import Home from './pages/Home'
-import MyPage from './pages/MyPage'
+import Header from './layout/Header';
+import Home from './pages/Home';
+import MyPage from './pages/MyPage';
+import Contact from './pages/Contact';
 
 const Router = () => {
     const routingConfig = [
         {
             path: "/",
-            element: <Home />
-        },
-        {
-            path: "/mypage",
-            element: <MyPage />
+            element: <Header />,
+            children: [
+                {
+                    path: "/",
+                    element: <Home />,
+                },
+                {
+                    path: "/mypage",
+                    element: <MyPage />
+                },
+                {
+                    path: "/contact",
+                    element: <Contact />
+                }
+            ]
         }
     ];
 
