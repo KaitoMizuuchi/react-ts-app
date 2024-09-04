@@ -9,6 +9,6 @@
 ## レビュー観点
 
 ## 関連issue
-- close KaitoMizuuchi/react-ts-app[issue番号]
+- close KaitoMizuuchi/read_log[issue番号]
 
 ## 補足
