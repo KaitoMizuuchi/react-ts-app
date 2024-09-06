@@ -19,7 +19,7 @@ model books {
     author     String // 著者名
     translator String? // 翻訳者名 null許可
     review     String? // 感想 null許可
-    rating     Int? // 評価 null許可
+    rating     Int // 評価 
     startDate  DateTime? // 読書開始日 null許可
     endDate    DateTime? // 読書終了日 null許可
     categoryId Int
