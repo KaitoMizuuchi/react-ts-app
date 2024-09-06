@@ -17,6 +17,14 @@ export const bookService = {
             data: book,
         })
         return createBook;
+    },
+
+    // idによる本情報の取得
+    async getBookById(id: number) {
+        const bookById = await prisma.books.findUnique({
+            where: { id }
+        });
+        return bookById;
     }
 }
 
