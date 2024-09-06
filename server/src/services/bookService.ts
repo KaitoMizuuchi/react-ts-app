@@ -25,6 +25,16 @@ export const bookService = {
             where: { id }
         });
         return bookById;
+    },
+
+    // idに基づくデータの更新
+    async updateBookById(id: number, book: BookProps) {
+        const updatedBook = await prisma.books.update({
+            where: { id },
+            data: book
+        });
+
+        return updatedBook;
     }
 }
 

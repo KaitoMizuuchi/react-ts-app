@@ -56,5 +56,22 @@ const getBookById = async (req: Request, res: Response) => {
     }
 }
 
+const updateBookById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const errors = validateInputBookData(req.body);
+        if (errors) {
+            return res.status(400).json(errors)
+        }
 
-export { getAllBooks, createBook, getBookById };
+        const updateBook = await bookService.updateBookById(Number(id), { ...req.body });
+        res.json(updateBook);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+
+export { getAllBooks, createBook, getBookById, updateBookById };
