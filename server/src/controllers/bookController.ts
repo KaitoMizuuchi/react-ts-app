@@ -56,6 +56,7 @@ const getBookById = async (req: Request, res: Response) => {
     }
 }
 
+// idで選択された本の情報の更新
 const updateBookById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
@@ -73,5 +74,25 @@ const updateBookById = async (req: Request, res: Response) => {
     }
 }
 
+// idで選択された本の情報の削除
+const deleteBookById = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
 
-export { getAllBooks, createBook, getBookById, updateBookById };
+        const deletedBook = await bookService.deleteBookById(Number(id));
+
+        // 本が見つからなければ404エラーを返す
+        if (!deletedBook) {
+            return res.status(404).json({ error: 'Book not found.' });
+        }
+
+        res.json({ message: 'Book deleted successfully.' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+
+export { getAllBooks, createBook, getBookById, updateBookById, deleteBookById };

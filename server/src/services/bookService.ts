@@ -35,6 +35,14 @@ export const bookService = {
         });
 
         return updatedBook;
+    },
+
+    // idに基づくデータの削除（物理削除）
+    async deleteBookById(id: number) {
+        const deleteBook = await prisma.books.delete({
+            where: { id }
+        })
+        return deleteBook;
     }
 }
 
