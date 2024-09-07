@@ -7,7 +7,16 @@ const prisma = new PrismaClient();
 export const bookService = {
     // データベースの本全件取得
     async getAllBooks() {
-        const allBooks = await prisma.books.findMany();
+        const allBooks = await prisma.books.findMany({
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                }
+            }
+        });
         return allBooks;
     },
 
@@ -22,7 +31,15 @@ export const bookService = {
     // idによる本情報の取得
     async getBookById(id: number) {
         const bookById = await prisma.books.findUnique({
-            where: { id }
+            where: { id },
+            include: {
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                }
+            }
         });
         return bookById;
     },
