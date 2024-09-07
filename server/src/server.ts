@@ -1,25 +1,21 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
+import cors from "cors";
+import dotenv from "dotenv";
 import bookRouter from "./routes/books";
+
+dotenv.config();
 
 const app = express();
 const PORT = 3000;
 
-const prisma = new PrismaClient();
+app.use(cors({
+    origin: process.env.REACT_APP_FRONTEND_URL,
+    credentials: true,
+}))
+
 app.use(express.json());
 
 app.use("/books", bookRouter);
-
-// 特定の本を取得
-// app.get("/books/id",)
-
-// 特定の本の更新
-// app.put("books/:id", )
-
-// 特定の本の削除
-// app.delete("/books/:id")
-
-
 
 // サーバーの起動
 app.listen(PORT, () => {
