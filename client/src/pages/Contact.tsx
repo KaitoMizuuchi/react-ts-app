@@ -1,19 +1,13 @@
-import ContactForm from '@/components/contact/ContactForm'
-import {  Container, } from '@mui/material'
-import React from 'react'
-
-
-
+import BookForm from "@/features/bookForm/components/BookForm";
+import { Container } from "@mui/material";
+import React from "react";
 
 const Contact = () => {
+    return (
+        <Container sx={{ my: 3 }}>
+            <BookForm />
+        </Container>
+    );
+};
 
-
-
-  return (
-    <Container sx={{my: 3}}>
-      <ContactForm />
-    </Container>
-  )
-}
-
-export default Contact
+export default Contact;

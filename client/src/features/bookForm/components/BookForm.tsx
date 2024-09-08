@@ -6,9 +6,9 @@ interface FormInputType {
     name: string;
     email: string;
     gender: string;
-  }
+}
 
-const ContactForm = () => {
+const BookForm = () => {
 
     const { handleSubmit, control } = useForm<FormInputType>({
         defaultValues: {
@@ -54,4 +54,4 @@ const ContactForm = () => {
     )
 }
 
-export default ContactForm
+export default BookForm;
