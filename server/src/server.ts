@@ -15,7 +15,7 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use("/books", bookRouter);
+app.use("/api/books", bookRouter);
 
 // サーバーの起動
 app.listen(PORT, () => {

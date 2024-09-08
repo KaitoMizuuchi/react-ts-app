@@ -1,8 +1,9 @@
-import { useRoutes } from 'react-router-dom'
-import Header from './layout/Header';
-import Home from './pages/Home';
-import MyPage from './pages/MyPage';
-import Contact from './pages/Contact';
+import { useRoutes } from "react-router-dom";
+import Header from "./layout/Header";
+import Home from "./pages/Home";
+import MyPage from "./pages/MyPage";
+import Contact from "./pages/Contact";
+import Form from "./pages/Form";
 
 const Router = () => {
     const routingConfig = [
@@ -16,19 +17,22 @@ const Router = () => {
                 },
                 {
                     path: "/mypage",
-                    element: <MyPage />
+                    element: <MyPage />,
                 },
                 {
                     path: "/contact",
-                    element: <Contact />
-                }
-            ]
-        }
+                    element: <Contact />,
+                },
+                {
+                    path: "/form",
+                    element: <Form />,
+                },
+            ],
+        },
     ];
-
 
     const routing = useRoutes(routingConfig);
     return routing;
-}
+};
 
-export default Router
+export default Router;
