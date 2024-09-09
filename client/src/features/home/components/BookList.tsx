@@ -1,13 +1,14 @@
-import { bookListProps } from "@/types";
 import { Box, Button, Chip, Rating, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import { useBookList } from "../hooks/useBookList";
 import Loading from "@/components/Loading";
+import { deleteBook } from "@/services/books/apiDeleteBook";
+import { bookListProps } from "@/types";
 
 const BookList = () => {
     const navigate = useNavigate();
-    const { bookList, loading, error } = useBookList();
+    const { bookList, setBookList, loading, error } = useBookList();
 
     const columns: GridColDef<(typeof bookList)[number]>[] = [
         {
@@ -77,7 +78,9 @@ const BookList = () => {
                 <Button
                     variant="contained"
                     color="error"
-                    onClick={(e) => handleDelete(e, params.row.id)}
+                    onClick={(e) =>
+                        handleDelete(e, params.row.id, params.row.title)
+                    }
                     type="button"
                     sx={{ width: "100%" }}
                 >
@@ -88,32 +91,42 @@ const BookList = () => {
     ];
 
     // 削除ボタンを押された時の処理
-    const handleDelete = (
+    const handleDelete = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-        selectedId: number
+        selectedId: number,
+        title: string
     ) => {
         e.stopPropagation();
-        window.confirm(`id：${selectedId}を削除しますか？`);
+        const isDelete = window.confirm(`id：${title}を削除しますか？`);
+        if (isDelete) {
+            await deleteBook(selectedId);
+            setBookList((prevList) =>
+                prevList.filter((book) => book.id !== selectedId)
+            );
+        }
     };
-
-    if (loading) return <Loading />;
-    if (error) return <div>エラーが出ました。</div>;
 
     return (
         <Box sx={{ minHeight: 600, width: "100%", height: "auto", mt: 4 }}>
-            <DataGrid
-                rows={bookList}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: {
-                            pageSize: 10,
+            {loading ? (
+                <Loading />
+            ) : error ? (
+                <div>エラーが出ました。</div>
+            ) : (
+                <DataGrid
+                    rows={bookList}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: {
+                                pageSize: 10,
+                            },
                         },
-                    },
-                }}
-                pageSizeOptions={[10]}
-                onCellClick={(params) => navigate(`/${params.row.id}`)}
-            />
+                    }}
+                    pageSizeOptions={[10]}
+                    onCellClick={(params) => navigate(`/${params.row.id}`)}
+                />
+            )}
         </Box>
     );
 };

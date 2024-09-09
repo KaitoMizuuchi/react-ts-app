@@ -1,12 +1,13 @@
+import { useEffect, useState } from "react";
 import { useAllBooks } from "@/hooks/useAllBooks"
 import { bookListProps } from "@/types";
-import { useEffect, useState } from "react";
 
 /*
     データベースから読書リストのデータを整形
 */
 export const useBookList = (): {
     bookList: bookListProps[];
+    setBookList: React.Dispatch<React.SetStateAction<bookListProps[]>>;
     loading: boolean;
     error: string | null;
 } => {
@@ -26,5 +27,5 @@ export const useBookList = (): {
         }
     }, [books])
 
-    return { bookList, loading, error }
+    return { bookList, setBookList, loading, error }
 }

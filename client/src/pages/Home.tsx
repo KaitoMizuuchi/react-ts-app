@@ -3,7 +3,7 @@ import { Container, Typography } from "@mui/material";
 
 const Home = () => {
     return (
-        <Container>
+        <Container sx={{ width: "100%" }}>
             <Typography variant="h3" sx={{ mt: 2 }}>
                 Reading List
             </Typography>

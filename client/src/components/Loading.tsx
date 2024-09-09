@@ -1,7 +1,7 @@
-import React from "react";
+import { LinearProgress } from "@mui/material";
 
 const Loading = () => {
-    return <div>Loading中です。</div>;
+    return <LinearProgress color="success" />;
 };
 
 export default Loading;
