@@ -8,6 +8,9 @@ export const bookService = {
     // データベースの本全件取得
     async getAllBooks() {
         const allBooks = await prisma.books.findMany({
+            where: {
+                deletedAt: null
+            },
             include: {
                 category: {
                     select: {
@@ -31,7 +34,12 @@ export const bookService = {
     // idによる本情報の取得
     async getBookById(id: number) {
         const bookById = await prisma.books.findUnique({
-            where: { id },
+            where: {
+                id,
+                deletedAt: {
+                    not: null,
+                },
+            },
             include: {
                 category: {
                     select: {
@@ -54,12 +62,28 @@ export const bookService = {
         return updatedBook;
     },
 
-    // idに基づくデータの削除（物理削除）
+    // idに基づくデータの削除（論理削除）
     async deleteBookById(id: number) {
-        const deleteBook = await prisma.books.delete({
-            where: { id }
+        const deleteBook = await prisma.books.update({
+            where: { id },
+            data: {
+                deletedAt: new Date(),
+            }
         })
         return deleteBook;
+    },
+
+    // データの復元
+    async restoreBookById(id: number) {
+        const restoreBook = await prisma.books.update({
+            where: {
+                id
+            },
+            data: {
+                deletedAt: null
+            }
+        })
+        return restoreBook;
     }
 }
 

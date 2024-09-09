@@ -34,7 +34,12 @@ const BookList = () => {
             renderCell: (params: GridRenderCellParams<bookListProps>) => (
                 <Chip
                     label={params.row.category}
-                    sx={{ px: 1, border: "#ccc solid 1px" }}
+                    sx={{
+                        px: 1,
+                        border: "#ccc solid 1px",
+                        height: "24px",
+                        background: "#ee82ee",
+                    }}
                     variant="filled"
                 />
             ),

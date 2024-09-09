@@ -136,8 +136,13 @@ export default function Header(props: Props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        retas-app
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                        sx={{ letterSpacing: 1.5 }}
+                    >
+                        Read-Log
                     </Typography>
                 </Toolbar>
             </AppBar>
