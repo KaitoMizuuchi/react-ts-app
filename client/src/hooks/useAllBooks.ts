@@ -1,4 +1,4 @@
-import { fetchAllBooks } from "@/services/books/apiGetAllData";
+import { fetchAllBooks } from "@/services/books/apiGetAllBooks";
 import { bookProps } from "@/types";
 import { useEffect, useState } from "react"
 

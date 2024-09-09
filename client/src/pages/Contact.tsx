@@ -1,4 +1,4 @@
-import BookForm from "@/features/bookForm/components/BookForm";
+import BookForm from "@/features/form/components/BookForm";
 import { Container } from "@mui/material";
 import React from "react";
 
