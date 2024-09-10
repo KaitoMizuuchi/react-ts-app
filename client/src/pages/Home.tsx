@@ -1,18 +1,14 @@
-import { useAllBooks } from "@/features/bookForm/hooks/useAllBooks";
-import React from "react";
+import BookList from "@/features/home/components/BookList";
+import { Container, Typography } from "@mui/material";
 
 const Home = () => {
-    const { books, loading, error } = useAllBooks();
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-
     return (
-        <ul>
-            {books.length !== 0
-                ? books.map((item) => <li key={item.id}>{item.title}</li>)
-                : null}
-        </ul>
+        <Container sx={{ width: "100%" }}>
+            <Typography variant="h3" sx={{ mt: 2 }}>
+                Reading List
+            </Typography>
+            <BookList />
+        </Container>
     );
 };
 

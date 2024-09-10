@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
 import Contact from "./pages/Contact";
 import Form from "./pages/Form";
+import BookDetail from "./pages/BookDetail";
 
 const Router = () => {
     const routingConfig = [
@@ -14,6 +15,10 @@ const Router = () => {
                 {
                     path: "/",
                     element: <Home />,
+                },
+                {
+                    path: "/:id",
+                    element: <BookDetail />,
                 },
                 {
                     path: "/mypage",
