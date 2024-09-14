@@ -27,6 +27,7 @@ export interface bookProps {
     deletedAt?: string | null;
 }
 
+
 // ブックリストで表示するデータの方
 export interface bookListProps {
     id: number;
