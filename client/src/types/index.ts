@@ -36,3 +36,13 @@ export interface bookListProps {
     category: string;
     rating: number | null;
 }
+
+
+// カテゴリーデータ
+export interface categoryProps {
+    id: number;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt: Date | null;
+}
