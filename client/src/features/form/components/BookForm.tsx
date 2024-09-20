@@ -3,12 +3,8 @@ import {
     Button,
     Chip,
     FormControl,
-    FormControlLabel,
-    FormLabel,
     InputLabel,
     MenuItem,
-    Radio,
-    RadioGroup,
     Rating,
     Select,
     Stack,
@@ -22,34 +18,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useState } from "react";
 import { ja } from "date-fns/locale/ja";
 import { useAllCategories } from "@/hooks/useAllCategories";
+import { formLabel, formTitle } from "./formLabels";
+import { commonTextStyle, requiredBatchStyle } from "./formStyles";
 
 const BookForm = () => {
     const { categories, loading, error } = useAllCategories();
-    console.log(categories);
     const [ratingValue, setRatingValue] = useState<number | null>(3);
-    const formLabel = {
-        title: "本のタイトルを入力してください",
-        author: "著者名を入力してください",
-        translator: "翻訳者を入力してください",
-        review: "感想を入力してください",
-        rating: "評価を入力してください",
-        startDate: "開始日を入力してください",
-        endDate: "終了日を入力してください",
-        category: "カテゴリーを入力してください",
-    };
-
-    const commonTextStyle = {
-        fontSize: "18px",
-    };
-
-    const requiredBatchStyle = {
-        background: "red",
-        color: "#fff",
-        width: "50px",
-        height: "20px",
-        fontSize: "12px",
-        mx: 1,
-    };
 
     return (
         <Box component="form" sx={{ maxWidth: "700px", m: "auto", mt: 4 }}>
@@ -65,7 +39,7 @@ const BookForm = () => {
                         sx={{ display: "flex", flex: 3, alignItems: "center" }}
                     >
                         <Typography sx={{ ...commonTextStyle }}>
-                            書籍名
+                            {formTitle.title}
                         </Typography>
                         <Chip label="必須" sx={requiredBatchStyle} />
                     </Box>
@@ -83,7 +57,7 @@ const BookForm = () => {
                         sx={{ display: "flex", flex: 3, alignItems: "center" }}
                     >
                         <Typography sx={{ ...commonTextStyle }}>
-                            作者
+                            {formTitle.author}
                         </Typography>
                         <Chip label="必須" sx={requiredBatchStyle} />
                     </Box>
@@ -97,7 +71,7 @@ const BookForm = () => {
                     }}
                 >
                     <Typography sx={{ ...commonTextStyle, flex: 3 }}>
-                        翻訳者
+                        {formTitle.translator}
                     </Typography>
                     <TextField sx={{ flex: 10 }} label={formLabel.translator} />
                 </Box>
@@ -109,7 +83,7 @@ const BookForm = () => {
                     }}
                 >
                     <Typography sx={{ ...commonTextStyle, flex: 3 }}>
-                        感想
+                        {formTitle.review}
                     </Typography>
                     <TextField
                         sx={{ flex: 10 }}
@@ -134,7 +108,7 @@ const BookForm = () => {
                         }}
                     >
                         <Typography sx={{ ...commonTextStyle }}>
-                            評価
+                            {formTitle.rating}
                         </Typography>
                         <Chip label="必須" sx={requiredBatchStyle} />
                     </Box>
@@ -163,7 +137,7 @@ const BookForm = () => {
                     }}
                 >
                     <Typography sx={{ ...commonTextStyle, flex: 3 }}>
-                        読書開始日
+                        {formTitle.startDate}
                     </Typography>
                     <LocalizationProvider
                         dateAdapter={AdapterDateFns}
@@ -186,7 +160,7 @@ const BookForm = () => {
                     }}
                 >
                     <Typography sx={{ ...commonTextStyle, flex: 3 }}>
-                        読書終了日
+                        {formTitle.endDate}
                     </Typography>
                     <LocalizationProvider
                         dateAdapter={AdapterDateFns}
@@ -216,7 +190,7 @@ const BookForm = () => {
                         }}
                     >
                         <Typography sx={{ ...commonTextStyle }}>
-                            カテゴリー
+                            {formTitle.category}
                         </Typography>
                         <Chip label="必須" sx={requiredBatchStyle} />
                     </Box>
