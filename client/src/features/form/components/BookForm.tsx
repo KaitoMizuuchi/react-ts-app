@@ -1,25 +1,12 @@
-import {
-    Box,
-    Button,
-    Chip,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Rating,
-    Select,
-    Stack,
-    TextField,
-    Typography,
-} from "@mui/material";
-// datePicker
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Box, Button, MenuItem, Stack } from "@mui/material";
 import { useState } from "react";
-import { ja } from "date-fns/locale/ja";
 import { useAllCategories } from "@/hooks/useAllCategories";
 import { formLabel, formTitle } from "./formLabels";
-import { commonTextStyle, requiredBatchStyle } from "./formStyles";
+import TextInput from "./inputs/TextInput";
+import SentenceInput from "./inputs/SentenceInput";
+import RatingInput from "./inputs/RatingInput";
+import DateInput from "./inputs/DateInput";
+import SelectInput from "./inputs/SelectInput";
 
 const BookForm = () => {
     const { categories, loading, error } = useAllCategories();
@@ -29,193 +16,65 @@ const BookForm = () => {
         <Box component="form" sx={{ maxWidth: "700px", m: "auto", mt: 4 }}>
             <Stack spacing={3}>
                 {/* 書籍名 */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    <Box
-                        sx={{ display: "flex", flex: 3, alignItems: "center" }}
-                    >
-                        <Typography sx={{ ...commonTextStyle }}>
-                            {formTitle.title}
-                        </Typography>
-                        <Chip label="必須" sx={requiredBatchStyle} />
-                    </Box>
-
-                    <TextField sx={{ flex: 10 }} label={formLabel.title} />
-                </Box>
+                <TextInput
+                    formTitle={formTitle.title}
+                    formLabel={formLabel.title}
+                    isChip={true}
+                />
                 {/* 作者 */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    <Box
-                        sx={{ display: "flex", flex: 3, alignItems: "center" }}
-                    >
-                        <Typography sx={{ ...commonTextStyle }}>
-                            {formTitle.author}
-                        </Typography>
-                        <Chip label="必須" sx={requiredBatchStyle} />
-                    </Box>
-                    <TextField sx={{ flex: 10 }} label={formLabel.author} />
-                </Box>
+                <TextInput
+                    formTitle={formTitle.author}
+                    formLabel={formLabel.author}
+                    isChip={true}
+                />
                 {/* 翻訳者 */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    <Typography sx={{ ...commonTextStyle, flex: 3 }}>
-                        {formTitle.translator}
-                    </Typography>
-                    <TextField sx={{ flex: 10 }} label={formLabel.translator} />
-                </Box>
+                <TextInput
+                    formTitle={formTitle.translator}
+                    formLabel={formLabel.translator}
+                />
                 {/* 感想 */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    <Typography sx={{ ...commonTextStyle, flex: 3 }}>
-                        {formTitle.review}
-                    </Typography>
-                    <TextField
-                        sx={{ flex: 10 }}
-                        label={formLabel.review}
-                        multiline
-                        rows={5}
-                        variant="standard"
-                    />
-                </Box>
+                <SentenceInput
+                    formTitle={formTitle.review}
+                    formLabel={formLabel.review}
+                />
                 {/* 評価 */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
+                <RatingInput
+                    formTitle={formTitle.rating}
+                    isChip={true}
+                    formLabel={formLabel.rating}
+                    ratingValue={ratingValue}
+                    onRatingChange={(event, newValue: number | null) => {
+                        setRatingValue(newValue);
                     }}
-                >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flex: 3,
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography sx={{ ...commonTextStyle }}>
-                            {formTitle.rating}
-                        </Typography>
-                        <Chip label="必須" sx={requiredBatchStyle} />
-                    </Box>
-                    <Box
-                        sx={{
-                            flex: 10,
-                        }}
-                    >
-                        <Typography sx={{ fontSize: "12px" }}>
-                            {formLabel.rating}
-                        </Typography>
-                        <Rating
-                            name="simple-controlled"
-                            value={ratingValue}
-                            onChange={(event, newValue: number | null) => {
-                                setRatingValue(newValue);
-                            }}
-                        />
-                    </Box>
-                </Box>
+                />
                 {/* 読書開始日 */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    <Typography sx={{ ...commonTextStyle, flex: 3 }}>
-                        {formTitle.startDate}
-                    </Typography>
-                    <LocalizationProvider
-                        dateAdapter={AdapterDateFns}
-                        adapterLocale={ja}
-                    >
-                        <DatePicker
-                            label={formLabel.startDate}
-                            format="yyyy年MM月dd日"
-                            slotProps={{
-                                calendarHeader: { format: "yyyy年MM月" },
-                            }}
-                        />
-                    </LocalizationProvider>
-                </Box>
+                <DateInput
+                    formTitle={formTitle.startDate}
+                    formLabel={formLabel.startDate}
+                />
                 {/* 読書終了日 */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    <Typography sx={{ ...commonTextStyle, flex: 3 }}>
-                        {formTitle.endDate}
-                    </Typography>
-                    <LocalizationProvider
-                        dateAdapter={AdapterDateFns}
-                        adapterLocale={ja}
-                    >
-                        <DatePicker
-                            label={formLabel.endDate}
-                            format="yyyy年MM月dd日"
-                            slotProps={{
-                                calendarHeader: { format: "yyyy年MM月" },
-                            }}
-                        />
-                    </LocalizationProvider>
-                </Box>
+                <DateInput
+                    formTitle={formTitle.endDate}
+                    formLabel={formLabel.endDate}
+                />
                 {/* カテゴリー */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flex: 3,
-                            alignItems: "center",
-                        }}
-                    >
-                        <Typography sx={{ ...commonTextStyle }}>
-                            {formTitle.category}
-                        </Typography>
-                        <Chip label="必須" sx={requiredBatchStyle} />
-                    </Box>
-                    <Box
-                        sx={{
-                            flex: 7,
-                        }}
-                    >
-                        <FormControl fullWidth>
-                            <InputLabel>{formLabel.category}</InputLabel>
-                            <Select label={formLabel.category} value="">
-                                {error || loading
-                                    ? null
-                                    : categories.map((categoryItem) => (
-                                          <MenuItem
-                                              value={categoryItem.id}
-                                              key={categoryItem.id}
-                                          >
-                                              {categoryItem.name}
-                                          </MenuItem>
-                                      ))}
-                            </Select>
-                        </FormControl>
-                    </Box>
-                </Box>
+                <SelectInput
+                    formTitle={formTitle.category}
+                    isChip={true}
+                    formLabel={formLabel.category}
+                    selectItems={
+                        error || loading
+                            ? null
+                            : categories.map((categoryItem) => (
+                                  <MenuItem
+                                      value={categoryItem.id}
+                                      key={categoryItem.id}
+                                  >
+                                      {categoryItem.name}
+                                  </MenuItem>
+                              ))
+                    }
+                />
             </Stack>
             <Button
                 type="submit"
