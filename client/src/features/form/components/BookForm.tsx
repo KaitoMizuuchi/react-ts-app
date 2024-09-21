@@ -201,11 +201,14 @@ const BookForm = () => {
                     >
                         <FormControl fullWidth>
                             <InputLabel>{formLabel.category}</InputLabel>
-                            <Select label={formLabel.category}>
+                            <Select label={formLabel.category} value="">
                                 {error || loading
                                     ? null
                                     : categories.map((categoryItem) => (
-                                          <MenuItem value={categoryItem.id}>
+                                          <MenuItem
+                                              value={categoryItem.id}
+                                              key={categoryItem.id}
+                                          >
                                               {categoryItem.name}
                                           </MenuItem>
                                       ))}
