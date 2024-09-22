@@ -7,6 +7,7 @@ interface RatingInputProps {
     formTitle: string;
     isChip?: boolean;
     formLabel: string;
+    error?: string;
 }
 
 const RatingInput = ({
@@ -14,6 +15,7 @@ const RatingInput = ({
     formTitle,
     isChip = false,
     formLabel,
+    error,
 }: RatingInputProps) => {
     const { control } = useFormContext();
     return (
@@ -50,6 +52,15 @@ const RatingInput = ({
                             {formLabel}
                         </Typography>
                         <Rating {...field} value={parseInt(field.value)} />
+                        <Typography
+                            sx={{
+                                color: "red",
+                                position: "absolute",
+                                bottom: -27,
+                            }}
+                        >
+                            {error ? error : ""}
+                        </Typography>
                     </Box>
                 </Box>
             )}

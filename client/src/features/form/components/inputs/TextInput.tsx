@@ -7,6 +7,7 @@ interface TextInputProps {
     formTitle: string;
     isChip?: boolean;
     formLabel: string;
+    error?: string;
 }
 
 const TextInput = ({
@@ -14,6 +15,7 @@ const TextInput = ({
     formTitle,
     isChip = false,
     formLabel,
+    error,
 }: TextInputProps) => {
     const { control } = useFormContext();
     return (
@@ -37,8 +39,22 @@ const TextInput = ({
                             <Chip label="必須" sx={requiredBatchStyle} />
                         ) : null}
                     </Box>
-
-                    <TextField sx={{ flex: 10 }} label={formLabel} {...field} />
+                    <Box sx={{ flex: 10, width: "100%", position: "relative" }}>
+                        <TextField
+                            {...field}
+                            label={formLabel}
+                            sx={{ width: "100%" }}
+                        />
+                        <Typography
+                            sx={{
+                                color: "red",
+                                position: "absolute",
+                                bottom: -27,
+                            }}
+                        >
+                            {error ? error : ""}
+                        </Typography>
+                    </Box>
                 </Box>
             )}
         />

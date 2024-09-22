@@ -8,13 +8,17 @@ import {
 } from "@mui/material";
 import { commonTextStyle, requiredBatchStyle } from "../formStyles";
 import { Controller, useFormContext } from "react-hook-form";
+import { ReactElement } from "react";
 
 interface SelectInputProps {
     formName: string;
     formTitle: string;
     isChip?: boolean;
     formLabel: string;
-    selectItems: JSX.Element[] | null;
+    selectItems: JSX.Element[];
+    error?: string;
+    fetchError?: string | null;
+    loading?: boolean;
 }
 
 const SelectInput = ({
@@ -23,6 +27,9 @@ const SelectInput = ({
     isChip = false,
     formLabel,
     selectItems,
+    error,
+    fetchError,
+    loading,
 }: SelectInputProps) => {
     const { control } = useFormContext();
     return (
@@ -55,12 +62,31 @@ const SelectInput = ({
                             flex: 7,
                         }}
                     >
-                        <FormControl fullWidth>
-                            <InputLabel>{formLabel}</InputLabel>
-                            <Select label={formLabel} {...field}>
-                                {selectItems}
-                            </Select>
-                        </FormControl>
+                        {loading ? (
+                            <Typography>Loading...</Typography>
+                        ) : fetchError ? (
+                            <Typography>{fetchError}</Typography>
+                        ) : (
+                            <FormControl fullWidth>
+                                <InputLabel>{formLabel}</InputLabel>
+                                <Select
+                                    label={formLabel}
+                                    {...field}
+                                    value={field.value}
+                                >
+                                    {selectItems}
+                                </Select>
+                            </FormControl>
+                        )}
+                        <Typography
+                            sx={{
+                                color: "red",
+                                position: "absolute",
+                                bottom: -27,
+                            }}
+                        >
+                            {error ? error : ""}
+                        </Typography>
                     </Box>
                 </Box>
             )}

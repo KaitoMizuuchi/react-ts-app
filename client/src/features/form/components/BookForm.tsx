@@ -1,4 +1,12 @@
-import { Box, Button, Container, MenuItem, Stack } from "@mui/material";
+import {
+    Box,
+    Button,
+    Container,
+    Menu,
+    MenuItem,
+    Stack,
+    Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { useAllCategories } from "@/hooks/useAllCategories";
 import { formLabel, formTitle } from "./formLabels";
@@ -8,11 +16,13 @@ import RatingInput from "./inputs/RatingInput";
 import DateInput from "./inputs/DateInput";
 import SelectInput from "./inputs/SelectInput";
 import { FormProvider, useForm } from "react-hook-form";
+import { BookFormType, bookSchema } from "@/validations/BookFormValidate";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const BookForm = () => {
     const { categories, loading, error } = useAllCategories();
 
-    const methods = useForm({
+    const methods = useForm<BookFormType>({
         defaultValues: {
             title: "",
             author: "",
@@ -21,10 +31,14 @@ const BookForm = () => {
             rating: 3,
             startDate: null,
             endDate: null,
-            categoryId: "",
+            categoryId: 1,
         },
+        resolver: zodResolver(bookSchema),
     });
-    const { handleSubmit } = methods;
+    const {
+        handleSubmit,
+        formState: { errors },
+    } = methods;
 
     const handleBookFormSubmit = (data: any) => {
         console.log(data);
@@ -39,13 +53,14 @@ const BookForm = () => {
                     sx={{ maxWidth: "700px", m: "auto", mt: 4 }}
                     onSubmit={handleSubmit(handleBookFormSubmit)}
                 >
-                    <Stack spacing={3}>
+                    <Stack spacing={5}>
                         {/* 書籍名 */}
                         <TextInput
                             formName="title"
                             formTitle={formTitle.title}
                             formLabel={formLabel.title}
                             isChip={true}
+                            error={errors.title?.message}
                         />
                         {/* 作者 */}
                         <TextInput
@@ -53,6 +68,7 @@ const BookForm = () => {
                             formTitle={formTitle.author}
                             formLabel={formLabel.author}
                             isChip={true}
+                            error={errors.author?.message}
                         />
                         {/* 翻訳者 */}
                         <TextInput
@@ -91,18 +107,16 @@ const BookForm = () => {
                             formTitle={formTitle.category}
                             isChip={true}
                             formLabel={formLabel.category}
-                            selectItems={
-                                error || loading
-                                    ? null
-                                    : categories.map((categoryItem) => (
-                                          <MenuItem
-                                              value={categoryItem.id}
-                                              key={categoryItem.id}
-                                          >
-                                              {categoryItem.name}
-                                          </MenuItem>
-                                      ))
-                            }
+                            fetchError={error}
+                            loading={loading}
+                            selectItems={categories.map((categoryItem) => (
+                                <MenuItem
+                                    value={categoryItem.id}
+                                    key={categoryItem.id}
+                                >
+                                    {categoryItem.name}
+                                </MenuItem>
+                            ))}
                         />
                     </Stack>
                     <Button
