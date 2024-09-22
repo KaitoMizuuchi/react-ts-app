@@ -38,7 +38,8 @@ const BookList = () => {
                         px: 1,
                         border: "#ccc solid 1px",
                         height: "24px",
-                        background: "#ee82ee",
+                        background: "#faa5fa",
+                        color: "#333",
                     }}
                     variant="filled"
                 />

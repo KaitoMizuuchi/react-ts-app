@@ -1,13 +1,4 @@
-import {
-    Box,
-    Button,
-    Container,
-    Menu,
-    MenuItem,
-    Stack,
-    Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Container, MenuItem, Stack } from "@mui/material";
 import { useAllCategories } from "@/hooks/useAllCategories";
 import { formLabel, formTitle } from "./formLabels";
 import TextInput from "./inputs/TextInput";
@@ -18,9 +9,12 @@ import SelectInput from "./inputs/SelectInput";
 import { FormProvider, useForm } from "react-hook-form";
 import { BookFormType, bookSchema } from "@/validations/BookFormValidate";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { sendBookData } from "@/services/books/apiPostBook";
+import { useNavigate } from "react-router-dom";
 
 const BookForm = () => {
     const { categories, loading, error } = useAllCategories();
+    const navigate = useNavigate();
 
     const methods = useForm<BookFormType>({
         defaultValues: {
@@ -40,9 +34,16 @@ const BookForm = () => {
         formState: { errors },
     } = methods;
 
-    const handleBookFormSubmit = (data: any) => {
-        console.log(data);
-        console.log("first");
+    const handleBookFormSubmit = (
+        bookData: BookFormType,
+        e: React.BaseSyntheticEvent
+    ) => {
+        e.preventDefault();
+        const isSended = window.confirm("入力データを送信しますか？");
+        if (isSended) {
+            sendBookData(bookData);
+            navigate("/");
+        }
     };
 
     return (
@@ -51,7 +52,7 @@ const BookForm = () => {
                 <Box
                     component="form"
                     sx={{ maxWidth: "700px", m: "auto", mt: 4 }}
-                    onSubmit={handleSubmit(handleBookFormSubmit)}
+                    onSubmit={handleSubmit(() => handleBookFormSubmit)}
                 >
                     <Stack spacing={5}>
                         {/* 書籍名 */}

@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { commonTextStyle, requiredBatchStyle } from "../formStyles";
 import { Controller, useFormContext } from "react-hook-form";
-import { ReactElement } from "react";
 
 interface SelectInputProps {
     formName: string;
