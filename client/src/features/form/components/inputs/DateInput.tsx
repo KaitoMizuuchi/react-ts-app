@@ -10,6 +10,8 @@ interface DateInputProps {
     formTitle: string;
     isChip?: boolean;
     formLabel: string;
+    isSelected?: boolean;
+    error?: string;
 }
 
 const DateInput = ({
@@ -17,6 +19,8 @@ const DateInput = ({
     formTitle,
     isChip = false,
     formLabel,
+    isSelected,
+    error,
 }: DateInputProps) => {
     const { control } = useFormContext();
     return (
@@ -44,19 +48,45 @@ const DateInput = ({
                             <Chip label="必須" sx={requiredBatchStyle} />
                         ) : null}
                     </Box>
-                    <LocalizationProvider
-                        dateAdapter={AdapterDateFns}
-                        adapterLocale={ja}
-                    >
-                        <DatePicker
-                            {...field}
-                            label={formLabel}
-                            format="yyyy年MM月dd日"
-                            slotProps={{
-                                calendarHeader: { format: "yyyy年MM月" },
+                    <Box sx={{ flex: 10, width: "100%", position: "relative" }}>
+                        <LocalizationProvider
+                            dateAdapter={AdapterDateFns}
+                            adapterLocale={ja}
+                        >
+                            <DatePicker
+                                {...field}
+                                disabled={isSelected}
+                                label={formLabel}
+                                format="yyyy年MM月dd日"
+                                slotProps={{
+                                    calendarHeader: { format: "yyyy年MM月" },
+                                    textField: {
+                                        error: !!error,
+                                        sx: error
+                                            ? {
+                                                  "& .MuiOutlinedInput-root": {
+                                                      "&.Mui-error": {
+                                                          borderColor:
+                                                              "#d32f2f",
+                                                      },
+                                                  },
+                                              }
+                                            : {},
+                                    },
+                                }}
+                            />
+                        </LocalizationProvider>
+                        <Typography
+                            sx={{
+                                color: "#d32f2f",
+                                position: "absolute",
+                                left: 0,
+                                mt: 0.5,
                             }}
-                        />
-                    </LocalizationProvider>
+                        >
+                            {error ? error : ""}
+                        </Typography>
+                    </Box>
                 </Box>
             )}
         />

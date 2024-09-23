@@ -58,7 +58,7 @@ const SelectInput = ({
                     </Box>
                     <Box
                         sx={{
-                            flex: 7,
+                            flex: 10,
                         }}
                     >
                         {loading ? (

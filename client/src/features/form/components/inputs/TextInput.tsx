@@ -44,10 +44,11 @@ const TextInput = ({
                             {...field}
                             label={formLabel}
                             sx={{ width: "100%" }}
+                            error={error ? true : false}
                         />
                         <Typography
                             sx={{
-                                color: "red",
+                                color: "#d32f2f",
                                 position: "absolute",
                                 bottom: -27,
                             }}

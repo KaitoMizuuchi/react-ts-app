@@ -29,6 +29,7 @@ const BookForm = () => {
         },
         resolver: zodResolver(bookSchema),
     });
+
     const {
         handleSubmit,
         formState: { errors },
@@ -45,6 +46,10 @@ const BookForm = () => {
             navigate("/");
         }
     };
+
+    const startDate = methods.watch("startDate");
+
+    console.log(errors);
 
     return (
         <Container sx={{ mt: 6 }}>
@@ -101,6 +106,8 @@ const BookForm = () => {
                             formName="endDate"
                             formTitle={formTitle.endDate}
                             formLabel={formLabel.endDate}
+                            isSelected={startDate === null}
+                            error={errors.endDate?.message}
                         />
                         {/* カテゴリー */}
                         <SelectInput
