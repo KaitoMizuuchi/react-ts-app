@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import bookRouter from "./routes/books";
+import categoryRouter from "./routes/category";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(cors({
 app.use(express.json());
 
 app.use("/api/books", bookRouter);
+app.use("/api/categories", categoryRouter);
 
 // サーバーの起動
 app.listen(PORT, () => {

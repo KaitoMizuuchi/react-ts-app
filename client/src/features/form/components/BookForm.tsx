@@ -1,105 +1,142 @@
-import {
-    Box,
-    Button,
-    FormControl,
-    FormControlLabel,
-    FormLabel,
-    Radio,
-    RadioGroup,
-    Stack,
-    TextField,
-} from "@mui/material";
-import React from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-
-interface FormInputType {
-    name: string;
-    email: string;
-    gender: string;
-}
+import { Box, Button, Container, MenuItem, Stack } from "@mui/material";
+import { useAllCategories } from "@/hooks/useAllCategories";
+import { formLabel, formTitle } from "./formLabels";
+import TextInput from "./inputs/TextInput";
+import SentenceInput from "./inputs/SentenceInput";
+import RatingInput from "./inputs/RatingInput";
+import DateInput from "./inputs/DateInput";
+import SelectInput from "./inputs/SelectInput";
+import { FormProvider, useForm } from "react-hook-form";
+import { BookFormType, bookSchema } from "@/validations/BookFormValidate";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { sendBookData } from "@/services/books/apiPostBook";
+import { useNavigate } from "react-router-dom";
 
 const BookForm = () => {
-    const { handleSubmit, control } = useForm<FormInputType>({
+    const { categories, loading, error } = useAllCategories();
+    const navigate = useNavigate();
+
+    const methods = useForm<BookFormType>({
         defaultValues: {
-            name: "",
-            email: "",
-            gender: "male",
+            title: "",
+            author: "",
+            translator: "",
+            review: "",
+            rating: 3,
+            startDate: null,
+            endDate: null,
+            categoryId: 1,
         },
+        resolver: zodResolver(bookSchema),
     });
 
-    const onSubmit: SubmitHandler<FormInputType> = (data) => {
-        console.log(data);
+    const {
+        handleSubmit,
+        formState: { errors },
+    } = methods;
+
+    const handleBookFormSubmit = (
+        bookData: BookFormType,
+        e: React.BaseSyntheticEvent
+    ) => {
+        e.preventDefault();
+        const isSended = window.confirm("入力データを送信しますか？");
+        if (isSended) {
+            sendBookData(bookData);
+            navigate("/");
+        }
     };
 
+    const startDate = methods.watch("startDate");
+
+    console.log(errors);
+
     return (
-        <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{ maxWidth: "500px", m: "auto" }}
-        >
-            <Stack spacing={2}>
-                <Controller
-                    name="name"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            id="name"
-                            label="名前を入力"
-                            variant="outlined"
-                            color="primary"
-                            {...field}
+        <Container sx={{ mt: 6 }}>
+            <FormProvider {...methods}>
+                <Box
+                    component="form"
+                    sx={{ maxWidth: "700px", m: "auto", mt: 4 }}
+                    onSubmit={handleSubmit(() => handleBookFormSubmit)}
+                >
+                    <Stack spacing={5}>
+                        {/* 書籍名 */}
+                        <TextInput
+                            formName="title"
+                            formTitle={formTitle.title}
+                            formLabel={formLabel.title}
+                            isChip={true}
+                            error={errors.title?.message}
                         />
-                    )}
-                />
-                <Controller
-                    name="email"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            id="email"
-                            label="メールアドレスを入力"
-                            variant="outlined"
-                            color="primary"
-                            {...field}
+                        {/* 作者 */}
+                        <TextInput
+                            formName="author"
+                            formTitle={formTitle.author}
+                            formLabel={formLabel.author}
+                            isChip={true}
+                            error={errors.author?.message}
                         />
-                    )}
-                />
-                <Controller
-                    name="gender"
-                    control={control}
-                    render={({ ...field }) => (
-                        <FormControl>
-                            <FormLabel id="gender-button-group-label">
-                                性別を選択
-                            </FormLabel>
-                            <RadioGroup
-                                {...field}
-                                aria-labelledby="gender-button-group-label"
-                            >
-                                <FormControlLabel
-                                    value="male"
-                                    control={<Radio />}
-                                    label="男性"
-                                />
-                                <FormControlLabel
-                                    value="female"
-                                    control={<Radio />}
-                                    label="女性"
-                                />
-                                <FormControlLabel
-                                    value="other"
-                                    control={<Radio />}
-                                    label="その他"
-                                />
-                            </RadioGroup>
-                        </FormControl>
-                    )}
-                />
-                <Button type="submit" variant="contained">
-                    送信
-                </Button>
-            </Stack>
-        </Box>
+                        {/* 翻訳者 */}
+                        <TextInput
+                            formName="translator"
+                            formTitle={formTitle.translator}
+                            formLabel={formLabel.translator}
+                        />
+                        {/* 感想 */}
+                        <SentenceInput
+                            formName="review"
+                            formTitle={formTitle.review}
+                            formLabel={formLabel.review}
+                        />
+                        {/* 評価 */}
+                        <RatingInput
+                            formName="rating"
+                            formTitle={formTitle.rating}
+                            isChip={true}
+                            formLabel={formLabel.rating}
+                        />
+                        {/* 読書開始日 */}
+                        <DateInput
+                            formName="startDate"
+                            formTitle={formTitle.startDate}
+                            formLabel={formLabel.startDate}
+                        />
+                        {/* 読書終了日 */}
+                        <DateInput
+                            formName="endDate"
+                            formTitle={formTitle.endDate}
+                            formLabel={formLabel.endDate}
+                            isSelected={startDate === null}
+                            error={errors.endDate?.message}
+                        />
+                        {/* カテゴリー */}
+                        <SelectInput
+                            formName="categoryId"
+                            formTitle={formTitle.category}
+                            isChip={true}
+                            formLabel={formLabel.category}
+                            fetchError={error}
+                            loading={loading}
+                            selectItems={categories.map((categoryItem) => (
+                                <MenuItem
+                                    value={categoryItem.id}
+                                    key={categoryItem.id}
+                                >
+                                    {categoryItem.name}
+                                </MenuItem>
+                            ))}
+                        />
+                    </Stack>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{ width: "100%", my: 5, background: "#00bfff" }}
+                    >
+                        送信
+                    </Button>
+                </Box>
+            </FormProvider>
+        </Container>
     );
 };
 
