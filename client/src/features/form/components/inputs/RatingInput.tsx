@@ -51,7 +51,18 @@ const RatingInput = ({
                         <Typography sx={{ fontSize: "12px" }}>
                             {formLabel}
                         </Typography>
-                        <Rating {...field} value={parseInt(field.value)} />
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <Rating
+                                {...field}
+                                value={parseInt(field.value)}
+                                onChange={(_, newValue) =>
+                                    field.onChange(newValue)
+                                }
+                            />
+                            <Typography sx={{ ml: 5, fontSize: "18px" }}>
+                                {field.value}
+                            </Typography>
+                        </Box>
                         <Typography
                             sx={{
                                 color: "red",

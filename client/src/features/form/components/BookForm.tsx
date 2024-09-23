@@ -35,11 +35,7 @@ const BookForm = () => {
         formState: { errors },
     } = methods;
 
-    const handleBookFormSubmit = (
-        bookData: BookFormType,
-        e: React.BaseSyntheticEvent
-    ) => {
-        e.preventDefault();
+    const handleBookFormSubmit = (bookData: BookFormType) => {
         const isSended = window.confirm("入力データを送信しますか？");
         if (isSended) {
             sendBookData(bookData);
@@ -49,15 +45,13 @@ const BookForm = () => {
 
     const startDate = methods.watch("startDate");
 
-    console.log(errors);
-
     return (
         <Container sx={{ mt: 6 }}>
             <FormProvider {...methods}>
                 <Box
                     component="form"
                     sx={{ maxWidth: "700px", m: "auto", mt: 4 }}
-                    onSubmit={handleSubmit(() => handleBookFormSubmit)}
+                    onSubmit={handleSubmit(handleBookFormSubmit)}
                 >
                     <Stack spacing={5}>
                         {/* 書籍名 */}
