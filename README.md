@@ -12,6 +12,15 @@
 
 - React
 - TypeScript
+### ページ遷移
+- react-router-dom
+### データ取得
+- axios
+### フォーム＆バリデーション
+- react-hook-form
+- zod
+### UIコンポーネント
+- MUI
 
 # ローカル環境作成
 
