@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model books {
+    id         Int        @id @default(autoincrement())
+    title      String // 本の名前
+    author     String // 著者名
+    translator String? // 翻訳者名 null許可
+    review     String? // 感想 null許可
+    rating     Int // 評価
+    startDate  DateTime? // 読書開始日 null許可
+    endDate    DateTime? // 読書終了日 null許可
+    categoryId Int
+    category   Categories @relation(fields: [categoryId], references: [id])
+    createdAt  DateTime   @default(now())
+    updatedAt  DateTime   @updatedAt
+    deletedAt  DateTime? // 論理削除のためのフィールド
+
+    @@index([categoryId])
+}
+
+model Categories {
+    id        Int       @id @default(autoincrement())
+    name      String // カテゴリー名
+    books     books[] // 1対多の関係
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    deletedAt DateTime? // 論理削除のためのフィールド
+}
