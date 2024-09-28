@@ -36,9 +36,7 @@ export const bookService = {
         const bookById = await prisma.books.findUnique({
             where: {
                 id,
-                deletedAt: {
-                    not: null,
-                },
+                deletedAt: null,
             },
             include: {
                 category: {

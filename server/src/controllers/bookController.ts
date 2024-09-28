@@ -44,12 +44,12 @@ const createBook = async (req: Request, res: Response) => {
 const getBookById = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-        const bookById = await bookService.getBookById(Number(id));
-        if (!bookById) {
+        const book = await bookService.getBookById(Number(id));
+        if (!book) {
             return res.status(404).json({ message: `Book with ID ${id} not found` })
         }
 
-        res.json(bookById);
+        res.json(book);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
