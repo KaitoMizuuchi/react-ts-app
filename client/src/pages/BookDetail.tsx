@@ -1,13 +1,11 @@
 import { useGetById } from "@/features/detail/hooks/useGetById";
-import { Chip, Container, Rating, Typography } from "@mui/material";
+import { Box, Chip, Container, Rating, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import React from "react";
 import { useParams } from "react-router-dom";
 
 const BookDetail = () => {
     const { id } = useParams();
     const { book, loading, error } = useGetById(id);
-    console.log(book);
     return (
         <Container>
             <Grid container spacing={2}>
@@ -30,8 +28,11 @@ const BookDetail = () => {
                         gap: 2,
                     }}
                 >
-                    <Chip label={book?.category.name} />
-                    <Rating name="rating" value={book?.rating} readOnly />
+                    <Chip
+                        label={book?.category.name}
+                        sx={{ width: "fit-content", px: 2 }}
+                    />
+                    <Rating name="rating" value={book?.rating || null} />
                 </Grid>
                 <Grid size={{ xs: 12, md: 12 }}>
                     <Typography variant="body1">
@@ -39,6 +40,24 @@ const BookDetail = () => {
                             ? book?.review
                             : "レビューがありません"}
                     </Typography>
+                </Grid>
+                <Grid size={12}>
+                    <Box>
+                        <Typography>読書開始日</Typography>
+                        <Typography>
+                            {book?.startDate
+                                ? String(book.startDate)
+                                : "読書開始日がありません"}
+                        </Typography>
+                    </Box>
+                    <Box>
+                        <Typography>読書終了日</Typography>
+                        <Typography>
+                            {book?.endDate
+                                ? String(book?.endDate)
+                                : "読書終了日がありません"}
+                        </Typography>
+                    </Box>
                 </Grid>
             </Grid>
         </Container>
