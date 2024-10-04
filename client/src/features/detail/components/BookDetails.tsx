@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid2";
-import { Chip, Rating } from "@mui/material";
+import { Box, Chip, Rating, Typography } from "@mui/material";
 
 interface BookDetailProps {
     category: string | undefined;
@@ -7,18 +7,26 @@ interface BookDetailProps {
 }
 
 const BookDetails = ({ category, rating }: BookDetailProps) => {
+    const fontSize = "20px";
     return (
         <Grid
             size={{ xs: 12, md: 6 }}
             sx={{
-                border: "1px solid red",
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
             }}
         >
-            <Chip label={category} sx={{ width: "fit-content", px: 2 }} />
-            <Rating name="rating" value={rating || null} readOnly />
+            <Box sx={{ display: "flex", mb: 5 }}>
+                <Typography sx={{ fontSize: fontSize }}>
+                    カテゴリー：
+                </Typography>
+                <Chip label={category} sx={{ width: "fit-content", px: 2 }} />
+            </Box>
+            <Box sx={{ display: "flex" }}>
+                <Typography sx={{ fontSize: fontSize }}>評価：</Typography>
+                <Rating name="rating" value={rating || null} readOnly />
+            </Box>
         </Grid>
     );
 };

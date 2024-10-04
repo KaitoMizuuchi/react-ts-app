@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 interface BookInfoProps {
@@ -8,11 +8,42 @@ interface BookInfoProps {
 }
 
 const BookInfo = ({ title, author, translator }: BookInfoProps) => {
+    const fontSize = "21px";
+    const mb = 3;
     return (
-        <Grid size={{ xs: 12, md: 6 }} sx={{ border: "1px solid black" }}>
-            <Typography variant="h2">{title}</Typography>
-            <Typography variant="h3">{author}</Typography>
-            <Typography variant="h4">{translator || "翻訳者なし"}</Typography>
+        <Grid size={{ xs: 12, md: 6 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "flex-end",
+                    mb: mb,
+                }}
+            >
+                <Typography sx={{ fontSize: fontSize }}>書籍：</Typography>
+                <Typography variant="h3">{title}</Typography>
+            </Box>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "flex-end",
+                    mb: mb,
+                }}
+            >
+                <Typography sx={{ fontSize: fontSize }}>著者：</Typography>
+                <Typography variant="h3">{author}</Typography>
+            </Box>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "flex-end",
+                    mb: mb,
+                }}
+            >
+                <Typography sx={{ fontSize: fontSize }}>翻訳家：</Typography>
+                <Typography variant="h3">
+                    {translator || "翻訳者なし"}
+                </Typography>
+            </Box>
         </Grid>
     );
 };

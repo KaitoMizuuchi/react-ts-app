@@ -7,9 +7,10 @@ interface BookReviewProps {
 
 const BookReview = ({ review }: BookReviewProps) => {
     return (
-        <Grid size={{ xs: 12, md: 12 }}>
-            <Typography variant="body1">
-                {review ?? "レビューがありません"}
+        <Grid size={{ xs: 12, md: 12 }} sx={{ mt: 7 }}>
+            <Typography variant="h4">感想</Typography>
+            <Typography variant="body1" sx={{ border: "1px solid #999" }}>
+                {review ?? "がありません"}
             </Typography>
         </Grid>
     );

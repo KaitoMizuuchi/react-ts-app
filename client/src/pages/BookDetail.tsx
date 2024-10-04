@@ -3,17 +3,22 @@ import BookDetails from "@/features/detail/components/BookDetails";
 import BookInfo from "@/features/detail/components/BookInfo";
 import BookReview from "@/features/detail/components/BookReview";
 import { useGetById } from "@/features/detail/hooks/useGetById";
-import { Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 const BookDetail = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const { book, loading, error } = useGetById(id);
     console.log(book);
 
+    const handleGoHome = () => {
+        navigate("/");
+    };
+
     return (
-        <Container>
+        <Container sx={{ mt: 5 }}>
             <Grid container spacing={2}>
                 <BookInfo
                     title={book?.title}
@@ -27,6 +32,9 @@ const BookDetail = () => {
                 <BookReview review={book?.review} />
                 <BookDate startDate={book?.startDate} endDate={book?.endDate} />
             </Grid>
+            <Button sx={{ mt: 4 }} variant="contained" onClick={handleGoHome}>
+                戻る
+            </Button>
         </Container>
     );
 };

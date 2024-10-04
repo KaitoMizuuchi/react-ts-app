@@ -9,7 +9,10 @@ interface BookDateProps {
 
 const BookDate = ({ startDate, endDate }: BookDateProps) => {
     return (
-        <Grid size={12} sx={{ display: "flex" }}>
+        <Grid
+            size={12}
+            sx={{ display: "flex", flexDirection: "column", mt: 10 }}
+        >
             <Box>
                 <Typography>読書開始日</Typography>
                 <Typography>
@@ -18,7 +21,7 @@ const BookDate = ({ startDate, endDate }: BookDateProps) => {
                         : "読書開始日がありません"}
                 </Typography>
             </Box>
-            <Box sx={{ mx: 5 }}>
+            <Box sx={{ mt: 7 }}>
                 <Typography>読書終了日</Typography>
                 <Typography>
                     {endDate
