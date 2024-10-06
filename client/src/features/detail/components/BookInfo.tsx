@@ -26,7 +26,7 @@ const BookInfo = ({ title, author, translator }: BookInfoProps) => {
                     {title}
                 </Typography>
                 <IconButton sx={{ ml: 2 }}>
-                    <EditIcon />
+                    <EditIcon sx={{ fontSize: "20px" }} />
                 </IconButton>
             </Box>
             <Box
@@ -41,7 +41,7 @@ const BookInfo = ({ title, author, translator }: BookInfoProps) => {
                     {author}
                 </Typography>
                 <IconButton sx={{ ml: 2 }}>
-                    <EditIcon />
+                    <EditIcon sx={{ fontSize: "20px" }} />
                 </IconButton>
             </Box>
             <Box
@@ -55,7 +55,7 @@ const BookInfo = ({ title, author, translator }: BookInfoProps) => {
                     {translator || "翻訳者なし"}
                 </Typography>
                 <IconButton sx={{ ml: 2 }}>
-                    <EditIcon />
+                    <EditIcon sx={{ fontSize: "20px" }} />
                 </IconButton>
             </Box>
         </Grid>

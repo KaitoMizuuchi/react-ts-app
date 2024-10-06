@@ -24,7 +24,7 @@ const BookDate = ({ startDate, endDate }: BookDateProps) => {
                         読書開始日
                     </Typography>
                     <IconButton sx={{ ml: 2 }}>
-                        <EditIcon />
+                        <EditIcon sx={{ fontSize: "20px" }} />
                     </IconButton>
                 </Box>
                 <Typography sx={commonDateStyle}>
@@ -39,7 +39,7 @@ const BookDate = ({ startDate, endDate }: BookDateProps) => {
                         読書終了日
                     </Typography>
                     <IconButton sx={{ ml: 2 }}>
-                        <EditIcon />
+                        <EditIcon sx={{ fontSize: "20px" }} />
                     </IconButton>
                 </Box>
                 <Typography sx={commonDateStyle}>

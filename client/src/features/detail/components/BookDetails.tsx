@@ -36,7 +36,7 @@ const BookDetails = ({ category, rating }: BookDetailProps) => {
                     }}
                 />
                 <IconButton sx={{ ml: 2 }}>
-                    <EditIcon />
+                    <EditIcon sx={{ fontSize: "20px" }} />
                 </IconButton>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
