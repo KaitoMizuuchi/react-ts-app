@@ -13,10 +13,6 @@ const BookDetail = () => {
     const { book, loading, error } = useGetById(id);
     console.log(book);
 
-    const handleGoHome = () => {
-        navigate("/");
-    };
-
     return (
         <Container sx={{ mt: 5 }}>
             <Grid container spacing={2}>
@@ -32,7 +28,11 @@ const BookDetail = () => {
                 <BookReview review={book?.review} />
                 <BookDate startDate={book?.startDate} endDate={book?.endDate} />
             </Grid>
-            <Button sx={{ mt: 4 }} variant="contained" onClick={handleGoHome}>
+            <Button
+                sx={{ mt: 10 }}
+                variant="contained"
+                onClick={() => navigate("/")}
+            >
                 戻る
             </Button>
         </Container>

@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import EditIcon from "@mui/icons-material/ModeEditOutlineTwoTone";
 
 interface BookInfoProps {
     title: string | undefined;
@@ -9,40 +10,53 @@ interface BookInfoProps {
 
 const BookInfo = ({ title, author, translator }: BookInfoProps) => {
     const fontSize = "21px";
-    const mb = 3;
     return (
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, md: 5 }}>
             <Box
                 sx={{
                     display: "flex",
                     alignItems: "flex-end",
-                    mb: mb,
+                    mb: 5,
                 }}
             >
-                <Typography sx={{ fontSize: fontSize }}>書籍：</Typography>
-                <Typography variant="h3">{title}</Typography>
+                <Typography
+                    variant="h2"
+                    sx={{ fontSize: "42px", fontWeight: "bold" }}
+                >
+                    {title}
+                </Typography>
+                <IconButton sx={{ ml: 2 }}>
+                    <EditIcon />
+                </IconButton>
             </Box>
             <Box
                 sx={{
                     display: "flex",
                     alignItems: "flex-end",
-                    mb: mb,
+                    mb: 3,
                 }}
             >
                 <Typography sx={{ fontSize: fontSize }}>著者：</Typography>
-                <Typography variant="h3">{author}</Typography>
+                <Typography variant="h3" sx={{ fontSize: "28px" }}>
+                    {author}
+                </Typography>
+                <IconButton sx={{ ml: 2 }}>
+                    <EditIcon />
+                </IconButton>
             </Box>
             <Box
                 sx={{
                     display: "flex",
                     alignItems: "flex-end",
-                    mb: mb,
                 }}
             >
                 <Typography sx={{ fontSize: fontSize }}>翻訳家：</Typography>
-                <Typography variant="h3">
+                <Typography variant="h4" sx={{ fontSize: "28px" }}>
                     {translator || "翻訳者なし"}
                 </Typography>
+                <IconButton sx={{ ml: 2 }}>
+                    <EditIcon />
+                </IconButton>
             </Box>
         </Grid>
     );

@@ -35,10 +35,10 @@ const BookList = () => {
                 <Chip
                     label={params.row.category}
                     sx={{
-                        px: 1,
+                        p: 1,
                         border: "#ccc solid 1px",
-                        height: "24px",
-                        background: "#faa5fa",
+                        fontWeight: 700,
+                        background: "#ed8edd",
                         color: "#333",
                     }}
                     variant="filled"
