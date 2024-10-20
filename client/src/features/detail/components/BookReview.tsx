@@ -4,16 +4,23 @@ import EditIcon from "@mui/icons-material/ModeEditOutlineTwoTone";
 
 interface BookReviewProps {
     review: string | null | undefined;
+    handleModalOpen: (
+        value: string | number | null | undefined,
+        type: string
+    ) => void;
 }
 
-const BookReview = ({ review }: BookReviewProps) => {
+const BookReview = ({ review, handleModalOpen }: BookReviewProps) => {
     return (
         <Grid size={{ xs: 12, md: 12 }} sx={{ mt: 5 }}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Typography variant="h3" sx={{ fontSize: "28px" }}>
                     レビュー
                 </Typography>
-                <IconButton sx={{ ml: 2 }}>
+                <IconButton
+                    sx={{ ml: 2 }}
+                    onClick={() => handleModalOpen(review, "review")}
+                >
                     <EditIcon sx={{ fontSize: "20px" }} />
                 </IconButton>
             </Box>

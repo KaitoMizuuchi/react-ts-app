@@ -1,5 +1,5 @@
 export interface ModalOpenProps {
-    value: string | number | null;
+    value: string | number | null | undefined;
     type: string;
 }
 

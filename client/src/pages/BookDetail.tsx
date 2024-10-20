@@ -20,7 +20,10 @@ const BookDetail = () => {
         type: "",
     });
 
-    const handleModalOpen = (value: string | number | null, type: string) => {
+    const handleModalOpen = (
+        value: string | number | null | undefined,
+        type: string
+    ) => {
         setIsModalOpen(!isModalOpen);
         setEditData({ value, type });
     };
@@ -51,7 +54,10 @@ const BookDetail = () => {
                         category={book?.category.name}
                         rating={book?.rating}
                     />
-                    <BookReview review={book?.review} />
+                    <BookReview
+                        review={book?.review}
+                        handleModalOpen={handleModalOpen}
+                    />
                     <BookDate
                         startDate={book?.startDate}
                         endDate={book?.endDate}

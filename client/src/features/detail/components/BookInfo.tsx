@@ -6,7 +6,10 @@ interface BookInfoProps {
     title: string | undefined;
     author: string | undefined;
     translator: string | null | undefined;
-    handleModalOpen: (value: any, type: any) => void;
+    handleModalOpen: (
+        value: string | number | null | undefined,
+        type: string
+    ) => void;
 }
 
 const BookInfo = ({

@@ -77,7 +77,11 @@ const EditModal = ({
             <Card
                 sx={{
                     width: "60%",
-                    height: "300px",
+                    height: "350px",
+                    overflowY: "scroll",
+                    "&::-webkit-scrollbar": {
+                        display: "none",
+                    },
                     background: "#fff",
                     position: "absolute",
                     top: "50%",
@@ -113,6 +117,8 @@ const EditModal = ({
                     value={inputValue}
                     label={`${editTitle}を入力してください`}
                     onChange={(e) => setInputValue(e.target.value)}
+                    multiline={type === "review"}
+                    rows={type === "review" ? 5 : 1}
                 />
                 <Box
                     sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}
