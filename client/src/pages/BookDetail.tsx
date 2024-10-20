@@ -2,40 +2,70 @@ import BookDate from "@/features/detail/components/BookDate";
 import BookDetails from "@/features/detail/components/BookDetails";
 import BookInfo from "@/features/detail/components/BookInfo";
 import BookReview from "@/features/detail/components/BookReview";
+import EditModal from "@/features/detail/components/EditModal";
 import { useGetById } from "@/features/detail/hooks/useGetById";
+import { ModalOpenProps } from "@/features/detail/types/detailTypes";
 import { Button, Container } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const BookDetail = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const { book, loading, error } = useGetById(id);
-    console.log(book);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editData, setEditData] = useState<ModalOpenProps>({
+        value: "",
+        type: "",
+    });
+
+    const handleModalOpen = (value: string | number | null, type: string) => {
+        setIsModalOpen(!isModalOpen);
+        setEditData({ value, type });
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(!isModalOpen);
+    };
 
     return (
-        <Container sx={{ mt: 5 }}>
-            <Grid container spacing={2}>
-                <BookInfo
-                    title={book?.title}
-                    author={book?.author}
-                    translator={book?.translator}
+        <>
+            {isModalOpen && (
+                <EditModal
+                    handleModalClose={handleModalClose}
+                    editData={editData}
+                    book={book}
+                    bookId={id}
                 />
-                <BookDetails
-                    category={book?.category.name}
-                    rating={book?.rating}
-                />
-                <BookReview review={book?.review} />
-                <BookDate startDate={book?.startDate} endDate={book?.endDate} />
-            </Grid>
-            <Button
-                sx={{ mt: 10 }}
-                variant="contained"
-                onClick={() => navigate("/")}
-            >
-                戻る
-            </Button>
-        </Container>
+            )}
+            <Container sx={{ mt: 5 }}>
+                <Grid container spacing={2}>
+                    <BookInfo
+                        handleModalOpen={handleModalOpen}
+                        title={book?.title}
+                        author={book?.author}
+                        translator={book?.translator}
+                    />
+                    <BookDetails
+                        category={book?.category.name}
+                        rating={book?.rating}
+                    />
+                    <BookReview review={book?.review} />
+                    <BookDate
+                        startDate={book?.startDate}
+                        endDate={book?.endDate}
+                    />
+                </Grid>
+                <Button
+                    sx={{ mt: 10 }}
+                    variant="contained"
+                    onClick={() => navigate("/")}
+                >
+                    戻る
+                </Button>
+            </Container>
+        </>
     );
 };
 
